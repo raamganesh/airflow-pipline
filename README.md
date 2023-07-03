@@ -1,4 +1,4 @@
-# airflow-pipeline
+# Airflow-pipeline
 
 Automate the extraction and analysis of trending topics on Twitter and the corresponding top trend videos on YouTube. By leveraging the Twitter API, the project retrieves the top trends for multiple regions. These trends are then used as input for the YouTube Data API to fetch the top three trending videos related to each trend in each region. The project is designed as a data pipeline using Apache Airflow, ensuring the process runs automatically at the end of each day. The resulting insights are consolidated in a report generated and stored in Amazon S3.
 
