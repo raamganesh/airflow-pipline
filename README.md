@@ -17,6 +17,12 @@ This project is an ETL (Extract, Transform, Load) pipeline for extracting data f
 
 ![image](https://github.com/raamganesh/airflow-pipline/assets/22257200/59d37323-047a-4f82-b395-2bbc68711259)
 
+## S3 bucket snapshot:
+![image](https://github.com/raamganesh/airflow-pipline/assets/22257200/847f204a-ad65-45e9-8b8b-6c9274635361)
+
+## CSV file snapshot:
+![image](https://github.com/raamganesh/airflow-pipline/assets/22257200/936c2af4-8a0f-4b98-9b67-690206e8b1a2)
+
 
 ## Future Development:
 
