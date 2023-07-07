@@ -6,7 +6,6 @@ from datetime import datetime, timedelta
 
 from airflow.decorators import dag, task
 
-# To import code from different directory
 import extraction
 
 @dag(   
@@ -39,18 +38,22 @@ import extraction
 def youtube_etl():
     @task
     def extract_data_from_youtube():
+        # get_trending_videos function from extraction module to get trending videos from YouTube API
         videos = extraction.get_trending_videos()
         return videos
     
     @task
     def tranform_data( videos ):
+        # Transform the extracted video data into a structured DataFrame
         data_frame = extraction.tranform_data( videos )
         return data_frame
     
     @task
     def upload_csv_to_s3( data_frame ):
+        # Upload the transformed DataFrame to S3 bucket
         extraction.load_data( data_frame )
 
+    # Workflow tasks
     videos = extract_data_from_youtube()
     data_frame = tranform_data( videos )
     upload_csv_to_s3( data_frame )
