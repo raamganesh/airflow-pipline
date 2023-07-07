@@ -1,4 +1,4 @@
-# Airflow-pipeline
+# Airflow-youtube-etl-pipeline
 This project is an ETL (Extract, Transform, Load) pipeline for extracting data from YouTube's trending videos API, transforming the data into a structured format, and loading it into an S3 bucket. The pipeline is built using Apache Airflow, a popular open-source platform for workflow automation and scheduling.
 
 ## Key Features:
