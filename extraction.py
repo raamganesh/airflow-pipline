@@ -41,7 +41,7 @@ def make_api_request(url, params):
         return None
 
 def get_trending_videos():
-    """Gets the list of trending videos in the UK."""
+    """Gets the list of trending videos for the given regions."""
 
     api_key = config.API_KEY
     regions = [ "IN", "GB", "US" ]
@@ -58,14 +58,17 @@ def get_trending_videos():
             "key": api_key
         }
 
+        # Make API request to get trending videos
         data = make_api_request(url, params)
         if data is not None:
+            # Process and format the video data by adding the region and rank information 
             data = [{**video, "region": region, "rank": rank + 1} for rank, video in enumerate(data)]
             videos.extend(data)
 
     return videos
 
 def tranform_data( videos ):
+    """Extract the the required infromation from the meta data"""
     video_list = []
     for video in videos:
         video_dict = dict()
@@ -83,6 +86,7 @@ def tranform_data( videos ):
     
         video_list.append(video_dict)
 
+    # Add todays date as a column in the dataframe
     today = datetime.date.today()
     video_df = pd.DataFrame( video_list )
 
@@ -92,8 +96,10 @@ def tranform_data( videos ):
 
 
 def upload_dataframe_to_s3(dataframe, bucket_name, key):
-    csv_buffer = dataframe.to_csv(index=False)  # Convert DataFrame to CSV string
+    # Convert DataFrame to CSV string
+    csv_buffer = dataframe.to_csv(index=False)
 
+    # create a boto3 session
     session = boto3.Session(
         region_name='us-west-2',
         aws_access_key_id=config.aws_access_key,
@@ -103,8 +109,9 @@ def upload_dataframe_to_s3(dataframe, bucket_name, key):
     s3 = session.client('s3')
 
     # Upload CSV data directly to S3 bucket
+    # Encode CSV string as bytes
     response = s3.put_object(
-        Body=csv_buffer.encode('utf-8'),  # Encode CSV string as bytes
+        Body=csv_buffer.encode('utf-8'),
         Bucket=bucket_name,
         Key=key
     )
@@ -115,17 +122,9 @@ def upload_dataframe_to_s3(dataframe, bucket_name, key):
         logger.error(f"Failed to upload file '{key}' to S3 bucket '{bucket_name}'")
 
 def load_data( df ):
+    "define the bucket name and filename and upload the data to s3"
     bucket_name = "youtube-etl-airflow"
     filename = f"youtube_{datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.csv"
 
+    # Upload the DataFrame to S3 bucket
     upload_dataframe_to_s3(df, bucket_name, filename)
-    
-
-
-videos = get_trending_videos()
-video_df = tranform_data( videos )
-
-load_data(video_df)
-
-
-
