@@ -122,7 +122,7 @@ def upload_dataframe_to_s3(dataframe, bucket_name, key):
         logger.error(f"Failed to upload file '{key}' to S3 bucket '{bucket_name}'")
 
 def load_data( df ):
-    "define the bucket name and filename and upload the data to s3"
+    """define the bucket name and filename and upload the data to s3"""
     bucket_name = "youtube-etl-airflow"
     filename = f"youtube_{datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.csv"
 
