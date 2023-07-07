@@ -29,7 +29,7 @@ import extraction
         # 'sla_miss_callback': yet_another_function, # or list of functions
         # 'trigger_rule': 'all_success'
     },
-        schedule="0 22 * * *",
+        schedule="0 21 * * *",
         start_date=pendulum.datetime(2023,7,7, tz='UTC'),
         catchup=False,
         tags=["youtube", "test"]
