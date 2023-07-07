@@ -10,7 +10,7 @@ This project is an ETL (Extract, Transform, Load) pipeline for extracting data f
 - Generates a comprehensive report consolidating the key metrics of the trending videos.
 - Stores the report in Amazon S3 for easy access and scalability.
 
-## Airflow Dashboard Sanpshot:
+## Airflow Dashboard Snapshot:
 ![image](https://github.com/raamganesh/airflow-pipline/assets/22257200/1b0afd1a-2e98-4d96-9333-24692d61f5d8)
 
 ![image](https://github.com/raamganesh/airflow-pipline/assets/22257200/28d5cb88-5f7e-49e2-ad5a-6c066f48b5aa)
