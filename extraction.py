@@ -110,11 +110,16 @@ def upload_dataframe_to_s3(dataframe, bucket_name, key):
 
     # Upload CSV data directly to S3 bucket
     # Encode CSV string as bytes
-    response = s3.put_object(
-        Body=csv_buffer.encode('utf-8'),
-        Bucket=bucket_name,
-        Key=key
-    )
+    try:
+        response = s3.put_object(
+            Body=csv_buffer.encode('utf-8'),
+            Bucket=bucket_name,
+            Key=key
+        )
+    except Exception as e:
+        logger.error(f"Failed to upload file '{key}' to S3 bucket '{bucket_name}'")
+        logger.error(f'exception message: {e}')
+        return False
 
     if response['ResponseMetadata']['HTTPStatusCode'] == 200:
         logger.info(f"File '{key}' uploaded successfully to S3 bucket '{bucket_name}'")
